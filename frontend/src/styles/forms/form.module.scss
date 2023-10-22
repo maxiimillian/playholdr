@@ -1,0 +1,47 @@
+@import '../variables.scss';
+
+.form-container {
+  background-color: $green-box;
+  width: 30%;
+  left: 0;
+  right: 0;
+  top: 5%;
+  margin: auto;
+  position: absolute;
+  color: $form-color;
+  z-index: 1;
+
+  @media screen and (max-width: $small) {
+    width: 100%;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  border-bottom: $form-header-border;
+  text-align: center;
+}
+
+.center {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form input[type='range'] {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.form label {
+  margin: 0px 10px 10px 0px;
+}

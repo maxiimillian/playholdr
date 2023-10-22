@@ -1,0 +1,29 @@
+@import './variables.scss';
+
+.game-options-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 15px;
+  row-gap: 15px;
+  grid-area: options;
+}
+
+.game-option {
+  background-color: $card-background;
+  border-radius: $border-radius;
+
+  padding: 20px;
+  opacity: 0.8;
+
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: fit-content;
+}
+
+.game-option:hover {
+  opacity: 1;
+  transform: scale(1.2);
+  cursor: pointer;
+}

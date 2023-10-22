@@ -1,0 +1,13 @@
+.username-container {
+  grid-area: username;
+  margin: 10px 0;
+}
+
+.username-text {
+  font-weight: 400;
+}
+
+.username-text:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
