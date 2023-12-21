@@ -3,10 +3,11 @@ import { Knex } from 'knex';
 export async function up(knex: Knex): Promise<void> {
   await knex.raw(`
     CREATE TABLE users (
-        id serial NOT NULL PRIMARY KEY,
-        name varchar(30) UNIQUE NOT NULL,
-        password varchar(100) NOT NULL,
-        email varchar(100) NOT NULL
+        id serial PRIMARY KEY,
+        name VARCHAR(50) UNIQUE NOT NULL,
+        password VARCHAR(120) NOT NULL,
+        email VARCHAR(255) UNIQUE,
+        date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 
     CREATE TABLE tokens (

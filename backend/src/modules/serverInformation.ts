@@ -1,6 +1,6 @@
 import { Namespace, Server } from 'socket.io';
 import Game from './games/Game';
-import * as utils from '@/utils';
+import * as utils from '../utils';
 
 type roomTracker = { [key: string]: Game };
 

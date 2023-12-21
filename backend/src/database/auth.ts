@@ -1,5 +1,11 @@
 import dbClient from './client';
 import crypto from 'crypto';
+import { User } from '@customTypes/schema';
+import jwt, { SignOptions } from 'jsonwebtoken';
+
+const jwtOptions: SignOptions = {
+  expiresIn: '7 days',
+};
 
 export default class Database {
   static getToken(token: string) {
@@ -35,7 +41,7 @@ export default class Database {
     return dbClient.runRawQuery(query, params);
   }
 
-  static getUserByUsername(username: string) {
+  static getUserByUsername(username: string): Promise<User> {
     return dbClient.knex
       .queryBuilder()
       .select('*')
@@ -49,8 +55,13 @@ export default class Database {
     return dbClient.runRawQuery(query);
   }
 
-  static createUser(name: string, password: string, email: string) {
+  static createUser(name: string, password: string, email: string): Promise<User> {
     const payload = { name, password, email };
-    return dbClient.knex.queryBuilder().insert(payload).into('users').returning('*');
+    return dbClient.knex.queryBuilder().insert(payload).into('users').returning<User>('*');
+  }
+
+  static createToken(user: User) {
+    const token = jwt.sign(user, process.env.JWT_KEY, jwtOptions);
+    return token;
   }
 }

@@ -7,10 +7,10 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "@/types/*": ["./src/types/*"],
-      "@/utils": ["./src/utils.ts"],
+      "@customTypes/*": ["@types/*"],
+      "@utils": ["utils.ts"],
       "*": ["node_modules/*"]
     },
     "typeRoots": ["environment.d.ts", "./node_modules/@types"]

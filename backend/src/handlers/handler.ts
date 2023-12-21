@@ -1,4 +1,4 @@
-import HandlerResponse from '@/types/handlerResponse';
+import HandlerResponse from '@customTypes/handlerResponse';
 import { modelFunction } from '../routes/route';
 
 export const defaultSuccessResponse: HandlerResponse = {

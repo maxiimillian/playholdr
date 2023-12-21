@@ -1,5 +1,5 @@
 import { Response, Router } from 'express';
-import HandlerResponse from '@/types/handlerResponse';
+import HandlerResponse from '@customTypes/handlerResponse';
 import { defaultHandler } from '..//handlers/handler';
 import { IRouter } from 'express';
 export type handlerFunction = (message: string, ...args: any) => Promise<any>;

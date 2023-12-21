@@ -1,6 +1,9 @@
 import { FC, ReactElement, useState } from 'react';
 import styles from '@/styles/forms/form.module.scss';
 import { createGame } from '@/root/api/game';
+import { useRouter } from 'next/router';
+
+
 
 const SudokuForm: FC = function () {
   const [time, setTime] = useState(5);
@@ -8,6 +11,7 @@ const SudokuForm: FC = function () {
   const [difficulty, setDifficulty] = useState('easy');
 
   const difficultyOptions = ['easy', 'medium', 'hard', 'extreme', 'test'];
+  const router = useRouter();
 
   function submitGame() {
     const payload = {
@@ -16,7 +20,10 @@ const SudokuForm: FC = function () {
       difficulty,
     };
 
-    createGame('sudoku', payload);
+    createGame('sudoku', payload).then((data) => {
+      const gamePath = `/sudoku/${data.code}`
+      router.push(gamePath);
+    });
   }
 
   function getSelectOptions(options: string[]): ReactElement[] {

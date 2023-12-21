@@ -12,7 +12,7 @@ async function requestHandler(fetchRequest: Promise<Response>) {
 
 async function defaultPostRequest(path: string, body = {}): Promise<any> {
   const headers = getDefaultHeaders();
-
+  console.log(process.env.NEXT_PUBLIC_API_URL);
   const request = fetch(`${process.env.NEXT_PUBLIC_API_URL}${path}`, {
     method: 'POST',
     headers,
@@ -22,10 +22,6 @@ async function defaultPostRequest(path: string, body = {}): Promise<any> {
   return requestHandler(request);
 }
 
-export function createGame(game: string, settings: any) {
-  defaultPostRequest(`/${game}/create`, settings).then((data: GameResponse) => {
-    if (data.ok) {
-      redirect(`/${game}/${data.code}`);
-    }
-  });
+export function createGame(game: string, settings: any): Promise<GameResponse> {
+  return defaultPostRequest(`/${game}/create`, settings);
 }

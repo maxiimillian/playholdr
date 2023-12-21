@@ -1,6 +1,6 @@
 import { getBoard } from '../../src/database/dbUtils';
 import { Difficiulty } from './games/Sudoku';
-import { Board } from '../../src/database/schema';
+import { Board } from '@customTypes/schema';
 export default class BoardManager implements Board {
   id: number;
   unsolved: string;

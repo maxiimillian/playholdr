@@ -2,7 +2,8 @@ import { Express } from 'express';
 import { Namespace } from 'socket.io';
 import { ServerInformation } from '../../modules/serverInformation';
 import Game from '../../modules/games/Game';
-import SudokuGame from 'src/modules/games/Sudoku';
+import SudokuGame from '../../modules/games/Sudoku';
+import Board from '../../modules/Board';
 
 interface GameCreator {
   [key: string]: (userId: number, options: any) => Promise<Game>;
@@ -17,7 +18,6 @@ export function createNameSpace(io: Namespace, app: Express, server: ServerInfor
       const sudokuGame = new SudokuGame(
         userId,
         parseInt(options.playerCount),
-        type,
         options.difficulty,
         options.time,
         board,
@@ -25,6 +25,12 @@ export function createNameSpace(io: Namespace, app: Express, server: ServerInfor
       return sudokuGame;
     },
   };
+
+  app.post(io.name + '/create', (req, res) => {
+    const options = req.body;
+    const token = req.body.auth;
+    const type = io.name.substring(1);
+  });
 
   function roomExists(roomCode: string) {
     return !!io.adapter.rooms.has(roomCode);

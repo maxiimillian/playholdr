@@ -1,8 +1,8 @@
-import HandlerResponse from '@/types/handlerResponse';
+import HandlerResponse from '@customTypes/handlerResponse';
 import database from '../database/auth';
 import { defaultModelHandler, defaultFailResponse, defaultSuccessResponse } from './handler';
 import bcrypt from 'bcrypt';
-
+import { User } from '@customTypes/schema';
 const SALT_ROUNDS = 10;
 
 export default class Handler {
@@ -40,32 +40,17 @@ export default class Handler {
     const isCorrectPassword: boolean = await Handler.compareHashes(passwordAttempt, user.password);
     if (!isCorrectPassword) return { ...errorResponse, data: 'Invalid Password' };
 
-    const tokenResponse = await database.refreshToken(user.id);
+    const token = database.createToken(user);
+    const tokenResponse = { token };
     return { ...successResponse, data: tokenResponse };
   }
 
   static async register(message: string, username: string, password: string, email: string) {
     const { successResponse, errorResponse } = Handler.createResponses(message);
     const hashedPassword: string = await Handler.hashPassword(password);
+    const user = await database.createUser(username, hashedPassword, email);
+    const token = database.createToken(user);
 
-    const response = await new Promise((resolve, reject) => {
-      database
-        .createUser(username, hashedPassword, email)
-        .then(([user]: [user: any]) => {
-          database
-            .refreshToken(user.id)
-            .then(modelResponse => {
-              resolve({ ...successResponse, data: modelResponse }); // Success
-            })
-            .catch(err => {
-              resolve({ ...errorResponse, data: err.toString() }); // Unknown Error
-            });
-        })
-        .catch(err => {
-          resolve({ ...errorResponse, data: err.toString() });
-        });
-    });
-
-    return response;
+    return { ...successResponse, data: token };
   }
 }
